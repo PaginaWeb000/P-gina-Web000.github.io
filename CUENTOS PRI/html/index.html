@@ -1,0 +1,1803 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuentos Mágicos de Puno</title>
+    
+    <!-- FUENTES DE GOOGLE -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================
+           🎨 PALETA ULTRA DINÁMICA Y VIBRANTE
+           ======================================== */
+        :root {
+            --naranja-fuego: #FF6B35;           /* Principal: NARANJA VIBRANTE */
+            --azul-profundo: #1A2A4A;           /* Secundario: AZUL PROFUNDO */
+            --dorado-brillante: #FFD700;        /* Acento: DORADO BRILLANTE */
+            --morado-energia: #6A4C93;          /* Gradiente: MORADO ELÉCTRICO */
+            --fucsia-vibrante: #FF1493;         /* Destaque: FUCSIA FLÚOR */
+            --blanco-puro: #FFFFFF;             /* Texto: Blanco puro */
+            --negro-elegante: #0A0A0A;          /* Fondo: Negro premium */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(ellipse at top, var(--azul-profundo) 0%, var(--negro-elegante) 70%);
+            background-attachment: fixed;
+            min-height: 100vh;
+            padding: 0;
+            position: relative;
+            overflow-x: hidden;
+            color: var(--blanco-puro);
+        }
+
+        /* Fondo con partículas mágicas DINÁMICAS */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, var(--naranja-fuego), transparent),
+                radial-gradient(2px 2px at 40px 70px, var(--dorado-brillante), transparent),
+                radial-gradient(1.5px 1.5px at 90px 40px, var(--fucsia-vibrante), transparent);
+            background-repeat: repeat;
+            background-size: 120px 120px;
+            animation: stars 15s linear infinite;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        @keyframes stars {
+            from { transform: translateY(0) rotate(0deg); }
+            to { transform: translateY(-120px) rotate(5deg); }
+        }
+
+        /* ==================== PANTALLA DE INICIO ==================== */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, var(--naranja-fuego) 0%, var(--morado-energia) 40%, var(--negro-elegante) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 1;
+            transition: opacity 0.8s ease-out;
+        }
+
+        .splash-screen.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .splash-content {
+            text-align: center;
+            position: relative;
+            z-index: 2001;
+            animation: entradaSplash 1s ease-out;
+        }
+
+        @keyframes entradaSplash {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* 🎯 TÍTULOS CON GRADIENTE EXPLOSIVO */
+        .splash-title, h1, .menu-title, .story-content-title, .quiz-title {
+            font-family: 'Fredoka', cursive;
+            background: linear-gradient(45deg, var(--naranja-fuego), var(--dorado-brillante), var(--fucsia-vibrante), var(--naranja-fuego));
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 2.5s ease infinite;
+            text-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+            line-height: 1.2;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .splash-title {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+            text-shadow: 0 0 40px rgba(255, 107, 53, 0.6);
+        }
+
+        .splash-btn {
+            background: linear-gradient(135deg, var(--naranja-fuego) 0%, var(--dorado-brillante) 50%, var(--fucsia-vibrante) 100%);
+            color: var(--blanco-puro);
+            border: none;
+            padding: 25px 70px;
+            font-size: 1.6em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 0 50px var(--naranja-fuego);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-family: 'Poppins', sans-serif;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .splash-btn:hover {
+            transform: scale(1.15) rotate(2deg);
+            box-shadow: 0 0 80px var(--fucsia-vibrante);
+        }
+
+        /* ==================== CONTENIDO PRINCIPAL ==================== */
+        .main-content {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.8s ease-in;
+        }
+
+        .main-content.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            text-align: center;
+            color: var(--blanco-puro);
+            margin-bottom: 50px;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            color: var(--naranja-fuego);
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-shadow: 0 0 15px rgba(255, 107, 53, 0.4);
+        }
+
+        /* ==================== MENÚ PRINCIPAL ==================== */
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .menu-title {
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            text-shadow: 0 0 25px rgba(255, 107, 53, 0.6);
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 35px 45px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(12px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--naranja-fuego), transparent);
+            transition: left 0.5s;
+            opacity: 0.4;
+        }
+
+        .menu-item:hover::before {
+            left: 100%;
+        }
+
+        .menu-item:hover {
+            background: rgba(255, 107, 53, 0.15);
+            border: 2px solid var(--naranja-fuego);
+            transform: translateX(15px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(255, 107, 53, 0.5);
+        }
+
+        .menu-item-text {
+            font-size: 2.2em;
+            color: var(--blanco-puro);
+            font-weight: bold;
+            letter-spacing: 1px;
+            flex: 1;
+        }
+
+        .menu-item-icon {
+            font-size: 3.5em;
+            margin-right: 30px;
+            filter: drop-shadow(0 0 20px var(--dorado-brillante));
+            animation: iconFloat 2s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(8deg); }
+        }
+
+        /* ==================== GRID DE HISTORIAS ==================== */
+        .stories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 35px;
+            margin-bottom: 50px;
+        }
+
+        .story-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            border-radius: 25px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .story-card::after {
+            content: "";
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--naranja-fuego), var(--dorado-brillante), var(--fucsia-vibrante));
+            border-radius: 27px;
+            opacity: 0;
+            z-index: -1;
+            transition: opacity 0.3s;
+            filter: blur(8px);
+        }
+
+        .story-card:hover::after {
+            opacity: 0.7;
+        }
+
+        .story-card:hover {
+            border: 2px solid transparent;
+            transform: translateY(-12px) rotateY(5deg);
+            box-shadow: 0 25px 50px rgba(255, 107, 53, 0.6);
+        }
+
+        .story-card-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .story-card:hover .story-card-image {
+            transform: scale(1.08);
+        }
+
+        .story-card-content {
+            padding: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .story-title {
+            font-size: 1.5em;
+            color: var(--blanco-puro);
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .story-preview {
+            font-size: 1em;
+            color: var(--dorado-brillante);
+            opacity: 0.9;
+        }
+
+        /* ==================== MODAL DE CONTENIDO ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1500;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 10, 10, 0.95);
+            animation: fadeIn 0.3s;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1A0F1A 0%, var(--negro-elegante) 100%);
+            margin: 40px auto;
+            padding: 40px;
+            border: 2px solid var(--naranja-fuego);
+            border-radius: 25px;
+            width: 90%;
+            max-width: 1000px;
+            box-shadow: 0 0 60px rgba(255, 107, 53, 0.7);
+            position: relative;
+            animation: modalAppear 0.5s ease-out;
+        }
+
+        @keyframes modalAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .close-btn {
+            color: var(--naranja-fuego);
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2.5em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--fucsia-vibrante);
+            transform: scale(1.3) rotate(90deg);
+        }
+
+        /* ==================== VISTA DE CONTENIDO ==================== */
+        .content-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            align-items: flex-start;
+        }
+
+        .content-cover {
+            flex-shrink: 0;
+        }
+
+        .content-cover img {
+            width: 220px;
+            height: 280px;
+            object-fit: cover;
+            border: 3px solid var(--naranja-fuego);
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.6);
+            transition: all 0.3s;
+        }
+
+        .content-cover img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255, 20, 147, 0.7);
+        }
+
+        .content-info {
+            flex: 1;
+        }
+
+        .story-content-title {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 25px rgba(255, 107, 53, 0.4);
+        }
+
+        .story-category {
+            font-size: 1.2em;
+            color: var(--dorado-brillante);
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* ==================== VIDEO CONTAINER ==================== */
+        .video-container {
+            margin: 30px 0;
+            text-align: center;
+            border: 3px solid var(--naranja-fuego);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+            transition: all 0.3s;
+        }
+
+        .video-container:hover {
+            box-shadow: 0 0 40px rgba(255, 20, 147, 0.6);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ==================== VISTA DE UNA SOLA PÁGINA ==================== */
+        .story-content-container {
+            background: rgba(255, 107, 53, 0.05);
+            border: 2px solid rgba(255, 107, 53, 0.2);
+            border-radius: 20px;
+            padding: 35px;
+            margin: 30px 0;
+            min-height: 400px;
+            transition: all 0.3s;
+        }
+
+        .story-content-container:hover {
+            background: rgba(255, 215, 0, 0.05);
+            border-color: var(--dorado-brillante);
+        }
+
+        .story-content {
+            font-size: 1.1em;
+            color: var(--blanco-puro);
+            line-height: 1.9;
+            text-align: justify;
+            white-space: pre-line;
+        }
+
+        /* ==================== BOTONES ==================== */
+        .btn-container {
+            text-align: center;
+            margin: 30px 0;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--naranja-fuego) 0%, var(--dorado-brillante) 60%, var(--fucsia-vibrante) 100%);
+            color: var(--blanco-puro);
+            border: none;
+            padding: 18px 45px;
+            font-size: 1.2em;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.4);
+        }
+
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: left 0.4s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px) scale(1.08);
+            box-shadow: 0 15px 40px rgba(255, 20, 147, 0.6);
+        }
+
+        .btn.secondary {
+            background: rgba(255, 107, 53, 0.15);
+            color: var(--blanco-puro);
+            border: 2px solid var(--dorado-brillante);
+        }
+
+        .btn.secondary:hover {
+            background: rgba(255, 215, 0, 0.25);
+            border-color: var(--naranja-fuego);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.8);
+        }
+
+        .btn.stop {
+            background: linear-gradient(135deg, var(--fucsia-vibrante) 0%, var(--naranja-fuego) 100%);
+            color: var(--blanco-puro);
+        }
+
+        .btn.stop:hover {
+            box-shadow: 0 0 25px rgba(255, 20, 147, 0.7);
+        }
+
+        /* ==================== CONTENEDOR DEL QUIZ ==================== */
+        .quiz-container {
+            margin-top: 40px;
+            padding: 35px;
+            background: rgba(255, 107, 53, 0.08);
+            border-radius: 25px;
+            border: 2px solid var(--naranja-fuego);
+            display: none;
+        }
+
+        .quiz-container.active {
+            display: block;
+        }
+
+        .quiz-title {
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 25px rgba(255, 107, 53, 0.6);
+            position: relative;
+        }
+
+        .quiz-title::after {
+            content: "❓";
+            position: absolute;
+            right: -50px;
+            top: 0;
+            font-size: 1.3em;
+            animation: bounce 0.8s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* ==================== SELECCIÓN DE EDAD ULTRA INTERACTIVA ==================== */
+        .age-selection {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .age-card {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, rgba(255, 215, 0, 0.15) 100%);
+            border: 4px solid var(--naranja-fuego);
+            border-radius: 25px;
+            padding: 45px 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+
+        .age-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--fucsia-vibrante) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.5s;
+        }
+
+        .age-card:hover::before {
+            transform: scale(1);
+        }
+
+        .age-card:hover {
+            transform: translateY(-10px) scale(1.08);
+            border-color: var(--fucsia-vibrante);
+            box-shadow: 0 20px 50px rgba(255, 20, 147, 0.5);
+        }
+
+        .age-icon {
+            font-size: 4.5em;
+            margin-bottom: 15px;
+            display: block;
+            animation: float 1.5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .age-number {
+            font-size: 2.8em;
+            font-weight: bold;
+            color: var(--naranja-fuego);
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+        }
+
+        .age-description {
+            font-size: 1.3em;
+            color: var(--dorado-brillante);
+            font-weight: bold;
+        }
+
+        /* ==================== QUIZ ==================== */
+        .quiz-section {
+            display: none;
+            margin-top: 40px;
+            padding: 40px;
+            background: rgba(255, 107, 53, 0.08);
+            border-radius: 25px;
+            border: 2px solid var(--naranja-fuego);
+            position: relative;
+        }
+
+        .quiz-section.active {
+            display: block;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question-counter {
+            font-size: 1.4em;
+            color: var(--fucsia-vibrante);
+            margin-bottom: 25px;
+            font-weight: bold;
+            text-align: center;
+            background: rgba(255, 20, 147, 0.1);
+            padding: 12px 25px;
+            border-radius: 30px;
+            display: inline-block;
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 2px solid var(--fucsia-vibrante);
+        }
+
+        .question {
+            font-size: 2em;
+            color: var(--blanco-puro);
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-align: center;
+            background: rgba(255, 107, 53, 0.1);
+            padding: 35px;
+            border-radius: 20px;
+            border-left: 5px solid var(--fucsia-vibrante);
+            border-right: 5px solid var(--fucsia-vibrante);
+            line-height: 1.5;
+            margin-top: 20px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .option-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 3px solid var(--naranja-fuego);
+            padding: 25px;
+            font-size: 1.2em;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: var(--blanco-puro);
+            text-align: center;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, var(--fucsia-vibrante), transparent);
+            transition: left 0.4s;
+            opacity: 0.3;
+        }
+
+        .option-btn:hover::before {
+            left: 100%;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background: rgba(255, 107, 53, 0.25);
+            border-color: var(--fucsia-vibrante);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(255, 20, 147, 0.4);
+        }
+
+        .option-btn.correct {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.4) 0%, rgba(0, 255, 0, 0.6) 100%);
+            border-color: #00ff00;
+            color: #00ff00;
+            animation: correctPulse 0.5s ease;
+        }
+
+        .option-btn.wrong {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.3) 0%, rgba(200, 0, 0, 0.5) 100%);
+            border-color: #ff0000;
+            color: #ff0000;
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes correctPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-12px); }
+            75% { transform: translateX(12px); }
+        }
+
+        .feedback {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 20px;
+            font-size: 1.6em;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+            animation: feedbackPop 0.4s ease;
+        }
+
+        @keyframes feedbackPop {
+            0% { transform: scale(0.7); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.success {
+            background: linear-gradient(135deg, rgba(57, 255, 20, 0.3) 0%, rgba(0, 255, 0, 0.4) 100%);
+            color: #00ff00;
+            border: 4px solid #00ff00;
+        }
+
+        .feedback.error {
+            background: linear-gradient(135deg, rgba(255, 20, 147, 0.3) 0%, rgba(200, 0, 0, 0.4) 100%);
+            color: #ff0000;
+            border: 4px solid #ff0000;
+        }
+
+        .quiz-complete {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.2) 0%, rgba(255, 215, 0, 0.2) 100%);
+            padding: 50px;
+            border-radius: 25px;
+            text-align: center;
+            color: var(--blanco-puro);
+            font-size: 2em;
+            margin-top: 30px;
+            border: 4px solid var(--fucsia-vibrante);
+            display: none;
+            animation: completeBounce 0.5s ease;
+        }
+
+        @keyframes completeBounce {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .quiz-complete.show {
+            display: block;
+        }
+
+        .score {
+            font-size: 3.5em;
+            font-weight: bold;
+            margin: 25px 0;
+            color: var(--fucsia-vibrante);
+            text-shadow: 0 0 30px rgba(255, 20, 147, 0.6);
+        }
+
+        .trophy {
+            font-size: 5em;
+            margin: 20px 0;
+            animation: trophySpin 1s ease-in-out;
+        }
+
+        @keyframes trophySpin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        /* ==================== RESPONSIVE ==================== */
+        @media (max-width: 768px) {
+            .splash-title {
+                font-size: 2.5em;
+                padding: 0 20px;
+            }
+
+            .splash-btn {
+                padding: 20px 50px;
+                font-size: 1.3em;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            .menu-title {
+                font-size: 2em;
+            }
+
+            .menu-item {
+                padding: 25px;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .menu-item-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+
+            .menu-item-text {
+                font-size: 1.8em;
+            }
+
+            .stories-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-container {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .video-container {
+                margin: 20px 0;
+            }
+
+            .age-selection {
+                grid-template-columns: 1fr;
+            }
+
+            .age-card {
+                padding: 35px 20px;
+            }
+
+            .question {
+                font-size: 1.5em;
+                padding: 25px;
+            }
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PANTALLA DE INICIO -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-title">CUENTOS, LEYENDAS Y FÁBULAS PARA NIÑOS</div>
+            <button class="splash-btn" onclick="playSound(); iniciarApp()">INICIAR</button>
+        </div>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="main-content" id="mainContent">
+        <div class="container">
+            <header>
+                <h1>CUENTOS MÁGICOS DE PUNO</h1>
+                <div class="subtitle">Historias de la tradición andina</div>
+            </header>
+
+            <!-- MENÚ PRINCIPAL -->
+            <div class="menu-container" id="menuContainer">
+                <div class="menu-title">MENÚ PRINCIPAL</div>
+                
+                <div class="menu-item" onclick="playSound(); mostrarHistorias('Cuentos')">
+                    <div class="menu-item-icon">📖</div>
+                    <div class="menu-item-text">Cuentos</div>
+                </div>
+                
+                <div class="menu-item" onclick="playSound(); mostrarHistorias('Fábulas')">
+                    <div class="menu-item-icon">🦊</div>
+                    <div class="menu-item-text">Fábulas</div>
+                </div>
+                
+                <div class="menu-item" onclick="playSound(); mostrarHistorias('Leyendas')">
+                    <div class="menu-item-icon">✨</div>
+                    <div class="menu-item-text">Leyendas</div>
+                </div>
+            </div>
+
+            <!-- GRID DE HISTORIAS -->
+            <div class="stories-grid" id="storiesGrid" style="display: none;">
+                <!-- Se llenará dinámicamente con JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DE CONTENIDO -->
+    <div class="modal" id="modal">
+        <div class="modal-content" id="modalContent">
+            <span class="close-btn" onclick="playSound(); cerrarModal()">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        // 🎵 SONIDO DE CLICK (base64 - no necesita archivo externo)
+        const clickSound = new Audio('data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBTGH0fPTgjMGHm7A7+OZURE');
+        
+        function playSound() {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(e => {}); // Ignora errores en móviles
+        }
+
+        // Datos de historias con portadas y videos
+        const historias = {
+            Cuentos: [
+                {
+                    id: 1,
+                    icon: "👨‍👨‍👦",
+                    title: "Los Tres Hermanos Flojos",
+                    category: "Cuento",
+                    preview: "Una lección sobre el trabajo y el esfuerzo",
+                    cover: "https://i.postimg.cc/mDHxszSy/h.jpg",
+                    story: `Érase una vez, en una casita al borde del bosque, una anciana y sabia abuela que tenía tres nietos. Los tres eran tan, pero tan flojos, que hasta para rascarse la espalda esperaban a que una rama pasara por ahí.
+
+La abuela, ya cansada de ver cómo la leña no se cortaba, el huerto se llenaba de hierbajos y los animales no se alimentaban, llamó a sus nietos y les dijo con una sonrisa astuta: "Mis queridos nietos, mis huesos ya no dan para más. He decidido que heredará mi casita, mi huerto y mi pequeño tesoro escondido aquél de ustedes que demuestre ser el más flojo de los tres".
+
+Los hermanos se miraron, atónitos. ¿Una competencia donde ganaba el que mejor demostrara su pereza? ¡Eso sí que era su tipo de desafío!
+
+"Mañana al amanecer", continuó la abuela, "cada uno realizará una tarea. Juzgaré cuál de ustedes la ejecuta con la mayor y más ingeniosa flojera".
+
+Al día siguiente, con el primer canto del gallo, comenzó la competencia.
+
+La abuela llamó al primer hermano y le dijo: "Ve al pozo y trae dos cubos de agua para las gallinas".
+
+El hermano arrastró los pies tan lentamente que un caracol lo adelantó. Al llegar al pozo, se sentó en el brocal y se puso a reflexionar: "Si lleno los cubos ahora, tendré que cargarlos de vuelta. Pero si espero a que llueva, el agua vendrá sola hasta el gallinero. Además, si las gallinas tienen sed, que vengan ellas a beber".
+
+Se quedó allí sentado, mirando las nubes y silbando. La abuela, que lo observaba desde la ventana, sonrió y anotó algo en un papel.
+
+Luego llamó al segundo hermano: "Ve al bosque y corta leña para el invierno".
+
+El segundo hermano, aún acostado en su jergón, contestó sin abrir los ojos: "Abuela, ¿para qué cortar leña ahora? Si hace frío, solo hay que moverse más para entrar en calor. Y si nos movemos, ya estamos calentitos. Es un esfuerzo innecesario".
+
+Dicho esto, se dio la vuelta y siguió durmiendo. La abuela asintió, anotando otra observación.
+
+Finalmente, despertó al tercer hermano: "Tu hermano se comió toda la mermelada. Ve al mercado a comprar más".
+
+El tercer hermano, sin levantarse, respondió: "Abuelita, si mi hermano se la comió, es porque ya no hay. Si ya no hay, no podemos desayunar mermelada. Si no desayunamos mermelada, podemos comer pan seco. El pan seco da sed. Con sed, bebemos agua. El agua ya está en el pozo. Así que, en realidad, todo está solucionado".
+
+La abuela rió entre dientes y fue a su habitación.
+
+Al atardecer, reunió a los tres. Los hermanos estaban seguros de haber ganado, cada uno creyendo que su flojera era la más excepcional.
+
+"He tomado una decisión", anunció la abuela. "Ninguno de ustedes heredará nada".
+
+Los tres abrieron la boca, indignados. "¿Pero cómo, abuela? ¡Cumplimos el desafío!".
+
+"Sí, demostraron ser flojos", dijo ella, mirándolos con cariño y severidad. "Pero la flojera no es virtud. Les propuse esta prueba para que vieran hasta qué punto su pereza los había cegado. El más flojo no es el más listo; es el que se pierde más. El que deja pasar el agua clara del pozo, el calor de la leña en invierno y el dulce sabor de la mermelada por no mover un dedo".
+
+Los hermanos bajaron la cabeza, avergonzados.
+
+"Mañana", continuó la abuela, "comenzaremos de nuevo. Pero esta vez, trabajaremos juntos. Y quien demuestre el mayor esfuerzo y la mayor inteligencia para hacer las cosas bien y con ingenio, ese sí heredará todo lo que tengo".
+
+Desde ese día, los tres hermanos aprendieron que el trabajo y el esfuerzo son las verdaderas riquezas de la vida.`,
+                    video: "https://www.youtube.com/embed/aUKIjyaeqzU   ",
+                    quiz: {
+                        3: [
+                            {
+                                question: "¿Cuántos hermanos flojos había en el cuento?",
+                                options: ["Dos hermanos", "Tres hermanos", "Cuatro hermanos", "Cinco hermanos"],
+                                answer: 1
+                            }
+                        ],
+                        4: [
+                            {
+                                question: "¿Por qué la abuela estaba cansada de sus nietos?",
+                                options: ["Porque eran muy traviesos", "Porque no ayudaban en nada", "Porque no comían", "Porque no dormían"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué tarea le dieron al primer hermano?",
+                                options: ["Cortar leña", "Ir al mercado", "Traer agua del pozo", "Cocinar"],
+                                answer: 2
+                            },
+                            {
+                                question: "¿Qué aprendieron los hermanos al final?",
+                                options: ["Que la flojera es buena", "Que el trabajo es importante", "Que no hay que obedecer", "Que la abuela era mala"],
+                                answer: 1
+                            }
+                        ],
+                        5: [
+                            {
+                                question: "¿Qué lección quería enseñar la abuela a sus nietos?",
+                                options: ["A ser más flojos", "A valorar el trabajo y el esfuerzo", "A no hacer nada", "A esconderse del trabajo"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué excusa puso el segundo hermano para no cortar leña?",
+                                options: ["Que le dolía la espalda", "Que si hacía frío, moviéndose se entraba en calor", "Que no sabía cortar", "Que no había hacha"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué premio ofreció la abuela al más flojo?",
+                                options: ["Un caramelo", "Su casita, huerto y tesoro", "Un juguete", "Un día sin tareas"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Cómo reaccionaron los hermanos cuando supieron que nadie heredaría?",
+                                options: ["Se alegraron", "Se enojaron", "Se indignaron", "No les importó"],
+                                answer: 2
+                            },
+                            {
+                                question: "¿Cuál es el mensaje principal del cuento?",
+                                options: ["Que la flojera es sabia", "Que el trabajo y el esfuerzo son las verdaderas riquezas", "Que hay que engañar a la abuela", "Que no hay que hacer caso"],
+                                answer: 1
+                            }
+                        ]
+                    }
+                }
+            ],
+            Fábulas: [
+                {
+                    id: 2,
+                    icon: "🦅",
+                    title: "El Zorro y el Cóndor",
+                    category: "Fábula",
+                    preview: "Una apuesta en las alturas de los Andes",
+                    cover: "https://i.postimg.cc/mrVkHqxq/cond.webp",
+                    story: `Un zorro hambriento que andaba buscando donde robar algo, vio a un cóndor que también estaba en los mismos.
+
+El zorro le dijo al cóndor:
+"¿De dónde vienes hermano? ¿del espacio?"
+"Vengo de las altas cumbres nevadas, cumbres que eternamente están cubiertas de helada nieve; he bajado a buscar alimentos para resistir mejor el rigor de las nevadas", dijo el.
+
+El zorro se rió a carcajadas y le respondió burlonamente:
+"Es raro que todo un señor cóndor, llamado rey de las alturas no pueda resistir el frío.
+
+Yo, con ser un habitante de la llanura, me siento más fuerte que tú para soportar ese frío que tanto miedo te infunde, y para demostrarte con hechos, te desafío a permanecer durante una noche en la cumbre más elevada de la cordillera de los Andes".
+
+El cóndor aceptó el reto y ambos ascendieron a la puna.
+
+El cóndor se posicionó de la punta más elevada, tendió una de sus alas a manera de colchón y se acurrucó cómodamente. El zorro, por su parte, de igual modo, tendió su traposa cola y se sentó frente al cóndor.
+
+Así comenzó la desigual contienda.
+
+No tardó en desencadenarse una terrible tempestad que es muy frecuente en aquellas regiones. El zorro, de primera intención, invocó a los dioses tutelares para que calmen sus iras, y desde un comienzo había alegado que la apuesta no era con la tempestad, ni con los rayos, sino contra el frío.
+
+Las condiciones de la apuesta, de común acuerdo, eran demasiado severas; pues, el ganador debía comerse al perdedor.
+
+Al poco rato el cóndor tenía a su lado un excelente y sabroso desayuno.`,
+                    video: "https://www.youtube.com/embed/JGqC4Oo1rnw   ",
+                    quiz: {
+                        3: [
+                            {
+                                question: "¿Qué animales son los protagonistas?",
+                                options: ["Un zorro y un cóndor", "Un perro y un gato", "Dos zorros", "Dos cóndores"],
+                                answer: 0
+                            }
+                        ],
+                        4: [
+                            {
+                                question: "¿Dónde vivía el cóndor?",
+                                options: ["En el bosque", "En las altas cumbres nevadas", "En la ciudad", "En el mar"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué desafío aceptó el cóndor?",
+                                options: ["Una carrera", "Resistir el frío en la cumbre", "Volar más alto", "Comer más rápido"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué pasó con el zorro?",
+                                options: ["Ganó la apuesta", "Se escapó", "Sucumbió al frío", "Volvió a casa"],
+                                answer: 2
+                            }
+                        ],
+                        5: [
+                            {
+                                question: "¿Por qué el zorro se sintió más fuerte que el cóndor?",
+                                options: ["Porque era más grande", "Porque vivía en la llanura", "Porque tenía más pelo", "Porque era más joven"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Cómo se protegió el cóndor del frío?",
+                                options: ["Con una manta", "Con una de sus alas como colchón", "Con fuego", "Con un abrigo"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué ocurrió esa noche en la cumbre?",
+                                options: ["Hizo mucho calor", "Hubo una terrible tempestad", "Estuvo soleado", "Nada especial"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Cuál era la condición de la apuesta?",
+                                options: ["El ganador volaría solo", "El ganador comería al perdedor", "Nada", "El perdedor se iba"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué nos enseña esta fábula?",
+                                options: ["Que el frío no hace daño", "Que no debemos ser vanidosos", "Que los cóndores son malos", "Que hay que aceptar desafíos"],
+                                answer: 1
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 3,
+                    icon: "🦆",
+                    title: "El Zorro y la Huallata",
+                    category: "Fábula",
+                    preview: "La astucia no siempre vence",
+                    cover: "https://i.postimg.cc/G2rPc6F4/zh.jpg",
+                    story: `En la orilla de una laguna, una wallata madre estaba sacándose los piojos. Sus crías jugaban alrededor de ella, sin sospechar nada.
+
+Una zorra vieja que pasaba por la pampa se detuvo y se quedó mirándolas. Saboreaba a las crías de la wallata desde lejos y pensaba en cómo engañarla.
+
+"Mi estimada señora, permítame una pregunta", dijo la zorra, acercándose a la wallata. "¿Cómo hace para que sus crías tengan patitas rojas?"
+
+La wallata, sabiendo que los zorros nunca hacen preguntas con buena intención, le mintió:
+"Es fácil", le dijo. "Pongo a mis crías al horno y cuando están asándose y sonando 'chiss, chiss', yo digo 'pinta, pinta, pinta'. Después las saco del horno y ya tienen las patitas rojas".
+
+La zorra se fue a su casa y construyó un horno. Lo calentó y puso dentro a sus hijos.
+"Que lindo, mis hijos también tendrán las patitas rojas", pensaba.
+
+De dentro del horno empezó a salir un ruido: "chiss-pum, chiss-pum". La zorra, saltando decía "pinta, pinta, pinta". Después abrió el horno y encontró a sus hijos como los tenía que encontrar: achicharrados.
+
+La zorra, furiosa, salió a buscar a la wallata. Quería vengarse. La encontró nadando tranquilamente en medio de la laguna seguida de sus crías. La zorra la miró sin poder hacer nada, no sabía nadar. Entonces empezó a gritar así:
+"¡Zorros de los cerros, zorros de las pampas, vengan a ayudarme!"
+
+Al rato aparecieron cientos de zorros, venían de todas partes, machos y hembras, chicos y grandes.
+
+La zorra les dijo:
+"Hermanos y hermanas, aquella wallata me ha hecho matar a mis crías, ayúdenme a castigarla. Bebamos todos el agua de la laguna. Cuando esté seca yo la agarro".
+
+Todos los zorros se acercaron a la orilla y empezaron a beber. La wallata se reía a carcajadas. "Ni todos los zorros podrán secar esta laguna", les decía a sus crías.
+
+Los zorros ya tenían las barrigas hinchadas, pero seguían bebiendo. Algunos empezaron a reventar. Otros reventaron. Murieron tantos que no se podía ni contarlos.
+
+La wallata, en el medio del agua, siguió riendo.`,
+                    video: "https://www.youtube.com/embed/30jOYDrDa2s   ",
+                    quiz: {
+                        3: [
+                            {
+                                question: "¿Qué quería la zora de la wallata?",
+                                options: ["Jugar con ella", "Comerse a sus crías", "Ser su amiga", "Nadar juntas"],
+                                answer: 1
+                            }
+                        ],
+                        4: [
+                            {
+                                question: "¿Qué le preguntó la zorra a la wallata?",
+                                options: ["Cómo volar", "Cómo tener patitas rojas", "Dónde estaba el agua", "Cómo hacer amigos"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué le dijo la wallata que hacía?",
+                                options: ["Que pintaba las patitas", "Que las metía al horno", "Que usaba tinte", "Que nada"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué pasó con las crías de la zorra?",
+                                options: ["Se pusieron rojas", "Se escaparon", "Se achicharraron", "Nada"],
+                                answer: 2
+                            }
+                        ],
+                        5: [
+                            {
+                                question: "¿Por qué la wallata le mintió a la zorra?",
+                                options: ["Porque es mala", "Porque sabía que quería engañarla", "Porque sí", "Porque no sabía"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué hizo la zorra para vengarse?",
+                                options: ["Lloró", "Reunió a muchos zorros", "Se fue", "Le pidió perdón"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué intentaron hacer todos los zorros?",
+                                options: ["Secar la laguna bebiendo agua", "Nadar", "Volar", "Cavar"],
+                                answer: 0
+                            },
+                            {
+                                question: "¿Qué pasó con los zorros que bebieron mucha agua?",
+                                options: ["Se hicieron fuertes", "Reventaron", "Nadarom", "Nada"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué nos enseña esta fábula?",
+                                options: ["Que hay que creer todo", "Que la astucia no siempre vence", "Que los zorros son buenos", "Que el agua es mala"],
+                                answer: 1
+                            }
+                        ]
+                    }
+                },
+                {
+                    id: 4,
+                    icon: "🐹",
+                    title: "El Zorro y el Cuy",
+                    category: "Fábula",
+                    preview: "La inteligencia vence la fuerza",
+                    cover: "https://i.postimg.cc/5NZC4Z1z/cu.jpg",
+                    story: `Alguien, un desconocido hacía destrozos en una chacra, de noche. Esto sucedió hace mucho tiempo.
+
+Las plantas amanecían rotas y a medio comer. Entonces, el dueño de la chacra construyó una trampa, la puso en el lugar adecuado y esperó atento, sin cerrar los ojos en ningún momento. A la media noche escuchó unos gritos; alguien había caído en la trampa.
+
+Era un cuy grande y gordo. El dueño lo amarró a una estaca y regresó a su casa.
+"Mañana temprano hiervan agua para pelar un cuy. Almorzaremos cuyecito", les dijo a sus tres hijas, antes de irse a acostar.
+
+El cuy, amarrado a la estaca, forcejeaba y mordía inútilmente la cuerda. Y, así lo encontró un zorro que pasaba por allí.
+
+"Compadre", le dijo el zorro. "¿Qué has hecho para que te tengan así?"
+"Ay, compadre, si supieras mi suerte", le dijo el cuy. "Yo enamoraba a la hija más gorda del dueño de esta chacra y ahora él quiere que me case con ella. Pero esa joven ya no me quieres. También quiere que aprenda a comer carne de gallina que a mí me da asco".
+
+Así le mintió el cuy. Después, haciéndose el sonso, exclamó el muy ladino:
+"Creo que a ti sí te gusta la carne de gallina".
+
+"A veces", le dijo el Zorro, también haciéndose el sonso.
+"¿Por qué entonces no me desatas y te pones en mi lugar? Así te casarás con una joven gorda y comerás carne de gallina todos los días".
+
+"Te haré ese favor, compadre", le dijo al cuy.
+
+Al día siguiente, muy temprano, cuando el dueño de la chacra vino a llevarse al cuy, encontró al zorro. "¡Desgraciado! ¡Anoche eras cuy y ahora eres zorro! Igual te voy a zurrar", dijo el dueño dándole latigazos.
+
+"¡Sí me voy a casar con tu hija! ¡Te lo prometo! También te prometo que comeré carne de gallina todos los días", gritaba el zorro.
+
+Al oír este atrevimiento, el dueño lo azotaba con más fuerza, hasta que en una tregua de la tunda, el zorro le explicó toda la mentira del cuy. El dueño se puso a reír y después lo soltó, un tanto arrepentido de haber descargado su ira con el zorro.
+
+Desde ese día, el zorro comenzó a buscar al cuy. Quería cobrarse la revancha de todos los latigazos que recibió del dueño.
+
+Un día se topó con él y pensó que había llegado la hora de la venganza. El cuy, al ver que ya no podía huir se puso a empujar una enorme roca y el zorro se le acercó para cumplir su cometido; pero, el cuy reaccionó:
+
+"Compadre zorro", le dijo. "A tiempo has venido. Tienes que ayudarme a sostener esta roca. La tierra se va a voltear y esta roca puede aplastarnos a todos".
+
+Al comienzo el zorro dudaba, pero la cara de asustado que ponía el cuy terminó por convencerlo. Y empezó a ayudarlo, es decir, a sostener la gigantesca roca.
+
+Después de un rato, el cuy le dijo: "Compadre, mientras tú empujas yo voy a buscar una piedra grande o un palo para acunar esta roca". Paso un día, dos días, y el cuy no volvía con la cuña.
+
+El zorro ya no podía más. "Soltaré la roca aunque me mate", pensó. Dio un salto hacia atrás, pero la roca ni se movió.
+"Otra vez me ha engañado", dijo. "Pero, ésta será la última porque lo voy a matar".
+
+Día y noche le siguió el rastro hasta que lo encontró junto a un corral abandonado. El cuy, al verlo, se puso a escarbar el suelo.
+"Rápido, rápido", decía como hablando para sí mismo. "Ya viene el juicio final, va a caer lluvia de fuego".
+
+"Bueno, compadre mentiroso, hasta aquí has llegado", le dijo el zorro. "Te voy a comer".
+"Está bien, compadre", le dijo el cuy. "Pero ahora hay que hacer algo más. Ayúdame a hacer un hueco porque va a llover fuego".
+
+El zorro se puso a ayudar. Cuando el hueco ya estuvo hondo, el cuy saltó dentro de él.
+"Échame tierra, compadre zorro", le rogaba el cuy. "Tápame por favor, no quiero que me queme la lluvia de fuego".
+
+El zorro, asustado, le contestó: "Viendo bien las cosas, tú eres menos pecador que yo. A ti no te castigará demasiado la lluvia de fuego. Mejor entríerrame a mí".
+
+"Tienes razón compadre. Cambiemos, pues, de lugar", le dijo el cuy, saliendo del hueco.
+
+El cuy no solamente le echó tierra, sino también, ortigas y espinas. Y mientras lo tapaba iba diciendo: "¡Achacau, achacau, ya empezó la lluvia de fuego!"
+
+Cuando terminó, se limpió las manos y se fue riendo.
+
+Pasaron los días y dentro del hueco el zorro empezó a sentir calor. Quiso sacar una mano y se topó con las ortigas.
+"Achacau", dijo. "Deben ser las brasas de la lluvia de fuego". Guardó su mano y esperó.
+
+Días después, el hambre le hizo arriesgarse: salió entre el ardor de la ortigas y los pinchos de las espinas. Vio que afuera todo seguía igual.
+"Ya se habrá enfriado el fuego", pensó. Estaba más flaco que una paja.
+
+Finalmente, se convenció de que había sido burlado, nuevamente. Lo buscó, entonces, sin descanso, día tras día y noche tras noche.
+
+Una noche que andaba buscando comida, encontró al cuy al borde de un pozo de agua. El cuy, al verlo, se puso a llorar.
+"¡Qué mala suerte tienes, compadre!", le dijo. "Yo estaba llevando un queso grande, pero se me ha caído en este pozo".
+
+El zorro se asomó al pozo y vio en el fondo el reflejo redondo de la luna.
+"Ése es el queso", le dijo el cuy. "Tenemos que sacarlo", dijo el zorro.
+"Hagamos esto, compadre: Usted entra de cabeza y yo lo sujeto de los pies".
+
+Y así lo hicieron por un buen rato. El cuy, sosteniéndolo, le decía: "Es usted muy pesado, compadre. Ya casi no puedo sostenerlo".
+
+Dicho esto, lo soltó. El zorro, gritando, cayó de cabeza al fondo del pozo. Y una vez más fue engañado por el cuy.
+
+La moraleja: La inteligencia y la astucia pueden vencer la fuerza bruta.`,
+                    video: "https://www.youtube.com/embed/eULfenddao4   ",
+                    quiz: {
+                        3: [
+                            {
+                                question: "¿Qué animal atraparon en la chacra?",
+                                options: ["Un zorro", "Un cuy", "Un conejo", "Un perro"],
+                                answer: 1
+                            }
+                        ],
+                        4: [
+                            {
+                                question: "¿Por qué el cuy mintió al zorro?",
+                                options: ["Porque le gusta mentir", "Para que lo soltaran", "Por aburrirse", "Porque es malo"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué le pasó al zorro al día siguiente?",
+                                options: ["Se escapó", "Lo atraparon", "Se casó", "Nada"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Por qué el zorro quería vengarse?",
+                                options: ["Porque le gusta pelear", "Por los latigazos que recibió", "Por aburrirse", "Porque sí"],
+                                answer: 1
+                            }
+                        ],
+                        5: [
+                            {
+                                question: "¿Qué le contó el cuy al zorro para engañarlo?",
+                                options: ["Que era rico", "Que quería casarse con la hija del dueño", "Que sabía volar", "Que era poderoso"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué hizo el cuy mientras el zorro sostenía la roca?",
+                                options: ["Lo ayudó de verdad", "Se fue y no volvió", "Buscó comida", "Durmió"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué le hizo el cuy al zorro en el pozo?",
+                                options: ["Lo ayudó a salir", "Lo hizo caer por engañarlo con la luna", "Le dio comida", "Nada"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué herramienta usó el cuy para engañar al zorro la última vez?",
+                                options: ["Un palo", "El reflejo de la luna", "Una piedra", "Una cuerda"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué nos enseña esta fábula?",
+                                options: ["Que la fuerza es todo", "Que la inteligencia vence la fuerza", "Que hay que confiar en todos", "Que el zorro es tonto"],
+                                answer: 1
+                            }
+                        ]
+                    }
+                }
+            ],
+            Leyendas: [
+                {
+                    id: 5,
+                    icon: "👑",
+                    title: "Manco Cápac y Mama Ocllo",
+                    category: "Leyenda",
+                    preview: "La fundación del imperio Inca",
+                    cover: "https://i.postimg.cc/28J4q1dv/cspsc.jpg",
+                    story: `Hace mucho tiempo, el dios Sol Inti miró la tierra y vio que las personas vivían sin orden, peleándose entre ellas. El dios Sol se puso muy triste y decidió enviar ayuda.
+
+Entonces, Inti envió a sus hijos Manco Cápac y Mama Ocllo desde el Lago Titicaca. Les dio una vara de oro mágica y les dijo: "Caminen por el mundo hasta que esta vara se hunda en la tierra. Ahí construirán una gran ciudad".
+
+Los hermanos caminaron muchos días por las montañas. En cada lugar intentaban hundir la vara, pero no entraba. Hasta que un día llegaron a un valle hermoso. ¡La vara se hundió completamente!
+
+"¡Aquí será!" gritaron felices. Y en ese lugar fundaron la ciudad del Cusco, la capital del gran Imperio Inca.
+
+Manco Cápac enseñó a los hombres a cultivar la tierra y Mama Ocllo enseñó a las mujeres a tejer. Así nació el Imperio más grande de América del Sur.`,
+                    video: "https://www.youtube.com/embed/CLhrjpEP3wY   ",
+                    quiz: {
+                        3: [
+                            {
+                                question: "¿Quién envió a Manco Cápac y Mama Ocllo?",
+                                options: ["El dios Sol Inti", "Un rey", "Su mamá", "Nadie"],
+                                answer: 0
+                            }
+                        ],
+                        4: [
+                            {
+                                question: "¿De dónde salieron Manco Cápac y Mama Ocllo?",
+                                options: ["Del mar", "Del Lago Titicaca", "Del cielo", "Del bosque"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué objeto mágico les dio el dios Sol?",
+                                options: ["Una espada", "Una vara de oro", "Un libro", "Una corona"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué ciudad fundaron?",
+                                options: ["Lima", "Arequipa", "Cusco", "Puno"],
+                                answer: 2
+                            }
+                        ],
+                        5: [
+                            {
+                                question: "¿Por qué el dios Sol estaba triste?",
+                                options: ["Porque hacía frío", "Porque las personas vivían sin orden peleándose", "Porque no había comida", "Porque no había luz"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Cuál era la señal para construir la ciudad?",
+                                options: ["Cuando vieran una estrella", "Cuando la vara se hundiera en la tierra", "Cuando lloviera", "Cuando amaneciera"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué enseñó Manco Cápac a los hombres?",
+                                options: ["A tejer", "A cultivar la tierra", "A pescar", "A volar"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué enseñó Mama Ocllo a las mujeres?",
+                                options: ["A cultivar", "A tejer y hacer cerámica", "A cazar", "A construir"],
+                                answer: 1
+                            },
+                            {
+                                question: "¿Qué representa esta leyenda?",
+                                options: ["La creación del mundo", "El origen del Imperio Inca", "Un cuento de amor", "Una batalla"],
+                                answer: 1
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
+        // Variables globales
+        let currentStory = null;
+        let currentAge = null;
+        let currentQuestion = 0;
+        let score = 0;
+        let isSpeaking = false;
+
+        // Funciones principales
+        function iniciarApp() {
+            const splash = document.getElementById('splashScreen');
+            const main = document.getElementById('mainContent');
+            
+            splash.classList.add('hidden');
+            setTimeout(() => {
+                main.classList.add('visible');
+            }, 100);
+        }
+
+        function mostrarHistorias(categoria) {
+            const grid = document.getElementById('storiesGrid');
+            const menu = document.getElementById('menuContainer');
+            
+            menu.style.display = 'none';
+            grid.style.display = 'grid';
+            grid.innerHTML = '';
+
+            const stories = historias[categoria] || [];
+            stories.forEach(story => {
+                const card = document.createElement('div');
+                card.className = 'story-card';
+                card.onclick = () => { playSound(); abrirHistoria(story); };
+                card.innerHTML = `
+                    <img src="${story.cover}" alt="${story.title}" class="story-card-image" onerror="this.style.display='none'">
+                    <div class="story-card-content">
+                        <div class="story-title">${story.title}</div>
+                        <div class="story-preview">${story.preview}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function abrirHistoria(story) {
+            currentStory = story;
+            currentAge = null;
+            currentQuestion = 0;
+            score = 0;
+
+            const modal = document.getElementById('modal');
+            const modalBody = document.getElementById('modalBody');
+            
+            modalBody.innerHTML = `
+                <div class="content-header">
+                    <div class="content-cover">
+                        <img src="${story.cover}" alt="${story.title}" onerror="this.style.display='none'">
+                    </div>
+                    <div class="content-info">
+                        <div class="story-content-title">${story.title}</div>
+                        <div class="story-category">${story.category}</div>
+                        <div class="btn-container">
+                            <button class="btn" id="narrarBtn" onclick="narrarHistoria()">🔊 Narrar Historia</button>
+                            <button class="btn secondary" onclick="playSound(); mostrarQuiz()">❓ Hacer Quiz</button>
+                            <button class="btn secondary" onclick="playSound(); cerrarModal()">← Regresar al Menú</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe src="${story.video}" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <div class="story-content-container">
+                    <div class="story-content">${story.story}</div>
+                </div>
+
+                <!-- Contenedor del Quiz -->
+                <div id="quizContainer" class="quiz-container"></div>
+            `;
+            
+            modal.classList.add('active');
+        }
+
+        function mostrarQuiz() {
+            const container = document.getElementById('quizContainer');
+            container.classList.add('active');
+            container.innerHTML = `
+                <div class="quiz-title">HACER QUIZ</div>
+                <div class="age-selection">
+                    <div class="age-card" onclick="playSound(); iniciarQuiz(3)">
+                        <span class="age-icon">👶</span>
+                        <div class="age-number">3 AÑOS</div>
+                        <div class="age-description">🎯 1 pregunta</div>
+                    </div>
+                    <div class="age-card" onclick="playSound(); iniciarQuiz(4)">
+                        <span class="age-icon">🧒</span>
+                        <div class="age-number">4 AÑOS</div>
+                        <div class="age-description">🎯 3 preguntas</div>
+                    </div>
+                    <div class="age-card" onclick="playSound(); iniciarQuiz(5)">
+                        <span class="age-icon">👦</span>
+                        <div class="age-number">5 AÑOS</div>
+                        <div class="age-description">🎯 5 preguntas</div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function iniciarQuiz(ageGroup) {
+            currentAge = ageGroup;
+            currentQuestion = 0;
+            score = 0;
+            mostrarPregunta();
+        }
+
+        function mostrarPregunta() {
+            if (!currentStory.quiz || !currentStory.quiz[currentAge]) {
+                mostrarQuizNoDisponible();
+                return;
+            }
+
+            const preguntas = currentStory.quiz[currentAge];
+            
+            if (currentQuestion >= preguntas.length) {
+                mostrarResultados();
+                return;
+            }
+
+            const pregunta = preguntas[currentQuestion];
+            const container = document.getElementById('quizContainer');
+            
+            container.innerHTML = `
+                <div class="quiz-section active">
+                    <div class="question-counter">Pregunta ${currentQuestion + 1} de ${preguntas.length}</div>
+                    <div class="question">${pregunta.question}</div>
+                    <div class="options" id="optionsContainer"></div>
+                    <div class="feedback" id="feedback"></div>
+                    <div class="btn-container" id="btnContainer"></div>
+                </div>
+            `;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            pregunta.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = option;
+                btn.onclick = () => { playSound(); responderPregunta(index, pregunta.answer); };
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function responderPregunta(selectedIndex, correctIndex) {
+            const feedback = document.getElementById('feedback');
+            const btnContainer = document.getElementById('btnContainer');
+            const optionBtns = document.querySelectorAll('.option-btn');
+            
+            optionBtns.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === correctIndex) {
+                score++;
+                feedback.className = 'feedback show success';
+                feedback.innerHTML = '¡Muy bien! ✓<br>¡Eres muy inteligente!';
+            } else {
+                feedback.className = 'feedback show error';
+                feedback.innerHTML = '¡Casi lo logras! ✗<br>¡Sigue intentando!';
+            }
+
+            optionBtns[selectedIndex].classList.add(selectedIndex === correctIndex ? 'correct' : 'wrong');
+            optionBtns[correctIndex].classList.add('correct');
+
+            btnContainer.innerHTML = `
+                <button class="btn" onclick="playSound(); siguientePregunta()">Siguiente →</button>
+            `;
+        }
+
+        function siguientePregunta() {
+            currentQuestion++;
+            mostrarPregunta();
+        }
+
+        function mostrarResultados() {
+            const totalPreguntas = currentStory.quiz[currentAge].length;
+            const porcentaje = Math.round((score / totalPreguntas) * 100);
+            
+            let mensaje = "";
+            let trofeo = "";
+            
+            if (porcentaje >= 80) {
+                mensaje = "¡Eres un campeón! 🌟";
+                trofeo = "🏆";
+            } else if (porcentaje >= 60) {
+                mensaje = "¡Muy bien hecho! 👏";
+                trofeo = "🥈";
+            } else {
+                mensaje = "¡Buen intento! Sigue practicando 📚";
+                trofeo = "🎖️";
+            }
+
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = `
+                <div class="quiz-complete show">
+                    <div class="trophy">${trofeo}</div>
+                    <h2>¡Felicidades!</h2>
+                    <div class="score">${score} de ${totalPreguntas}</div>
+                    <p style="font-size: 1.3em; color: var(--fucsia-vibrante);">${porcentaje}% correctas</p>
+                    <p style="margin-top: 20px; font-size: 1.3em; font-weight: bold;">${mensaje}</p>
+                    <div class="btn-container" style="margin-top: 30px;">
+                        <button class="btn" onclick="playSound(); mostrarQuiz()">🔄 Jugar de nuevo</button>
+                        <button class="btn secondary" onclick="playSound(); cerrarModal()">🏠 Volver al Menú</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function mostrarQuizNoDisponible() {
+            const container = document.getElementById('quizContainer');
+            container.innerHTML = `
+                <div class="quiz-complete show">
+                    <div style="font-size: 3em; margin: 20px;">😊</div>
+                    <h2>¡Próximamente!</h2>
+                    <p style="margin: 20px 0;">Las preguntas para esta edad estarán disponibles muy pronto.</p>
+                    <button class="btn secondary" onclick="playSound(); mostrarQuiz()">← Volver</button>
+                </div>
+            `;
+        }
+
+        function narrarHistoria() {
+            if (!currentStory || !('speechSynthesis' in window)) return;
+            
+            const narrarBtn = document.getElementById('narrarBtn');
+            
+            if (isSpeaking) {
+                window.speechSynthesis.cancel();
+                isSpeaking = false;
+                narrarBtn.textContent = '🔊 Narrar Historia';
+                narrarBtn.classList.remove('stop');
+            } else {
+                const utterance = new SpeechSynthesisUtterance(currentStory.story);
+                utterance.lang = 'es-ES';
+                utterance.rate = 0.85;
+                
+                utterance.onend = function() {
+                    isSpeaking = false;
+                    narrarBtn.textContent = '🔊 Narrar Historia';
+                    narrarBtn.classList.remove('stop');
+                };
+                
+                utterance.onerror = function() {
+                    isSpeaking = false;
+                    narrarBtn.textContent = '🔊 Narrar Historia';
+                    narrarBtn.classList.remove('stop');
+                };
+                
+                window.speechSynthesis.speak(utterance);
+                isSpeaking = true;
+                narrarBtn.textContent = '⏹️ Detener';
+                narrarBtn.classList.add('stop');
+            }
+        }
+
+        function cerrarModal() {
+            if (isSpeaking && 'speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                isSpeaking = false;
+            }
+            
+            const modal = document.getElementById('modal');
+            const menu = document.getElementById('menuContainer');
+            const grid = document.getElementById('storiesGrid');
+            
+            modal.classList.remove('active');
+            menu.style.display = 'block';
+            grid.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('modal');
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        }
+    </script>
+</body>
+</html>
